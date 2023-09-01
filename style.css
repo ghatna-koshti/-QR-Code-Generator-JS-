@@ -85,6 +85,9 @@ body{
     display: grid;
     place-items: center;
     padding: 20px;
+    max-width: 100%; /* Ensure the QR code container doesn't exceed the screen width */
+    overflow: auto; /* Add scrollbars if the content overflows the screen */
+    padding: 20px;
 
 }
 

@@ -15,9 +15,11 @@ downloadBtn.addEventListener("click",()=>{
     if(img!=null){
         let imgAtr = img.getAttribute('src');
         downloadBtn.setAttribute("href",imgAtr);
+        downloadBtn.setAttribute("download", "QR_Code.png");
     }
     else{
-        downloadBtn.setAttribute("href",`${document.querySelector('canvas').toDataURL()}`)
+        downloadBtn.setAttribute("href",`${document.querySelector('canvas').toDataURL()}`);
+        alert("QR Code not generated yet.");
     }
 
 })
