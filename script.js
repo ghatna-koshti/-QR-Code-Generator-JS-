@@ -1,32 +1,11 @@
 const qrText = document.getElementById("qr-text");
 const sizes = document.getElementById("sizes");
 const generateBtn = document.getElementById("generateBtn");
-const downloadBtn = document.getElementById("downloadBtn");
 const qrContainer = document.querySelector(".qr-body");
 
 generateBtn.addEventListener("click", (e) => {
   e.preventDefault();
   isEmptyInput();
-});
-
-downloadBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // Prevent the default behavior of the anchor tag
-
-  let img = document.querySelector('.qr-body img');
-
-  if (img != null) {
-    let imgSrc = img.getAttribute('src');
-
-    // Create an anchor element for downloading
-    let anchor = document.createElement("a");
-    anchor.href = imgSrc;
-    anchor.download = "QR_Code.png";
-
-    // Trigger a click event on the anchor to initiate the download
-    anchor.click();
-  } else {
-    alert("QR Code not generated yet.");
-  }
 });
 
 sizes.addEventListener("change", (e) => {
@@ -35,11 +14,7 @@ sizes.addEventListener("change", (e) => {
 });
 
 function isEmptyInput() {
-  if (qrText.value.length > 0) {
-    generateQRCode();
-  } else {
-    alert("Enter the text or URL to generate a QR Code");
-  }
+  (qrText.value.length > 0) ? generateQRCode() : alert("Enter the text or URL to generate QR Code");
 }
 
 let size = sizes.value;
@@ -53,4 +28,23 @@ function generateQRCode() {
     colorLight: "#fff",
     colorDark: "#000",
   });
+}
+
+// Function to check if the device is a mobile device
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Remove the download button if it's a mobile device
+const downloadBtn = document.getElementById("downloadBtn");
+if (isMobileDevice()) {
+  downloadBtn.style.display = 'none';
+}
+
+// Remove the "large" option from the dropdown if it's a mobile device
+if (isMobileDevice()) {
+  const largeOption = sizes.querySelector("option[value='300']");
+  if (largeOption) {
+    sizes.removeChild(largeOption);
+  }
 }
