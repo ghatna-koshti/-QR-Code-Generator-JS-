@@ -6,36 +6,40 @@ const qrContainer = document.querySelector(".qr-body");
 
 generateBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  isEmptyInput()
+  isEmptyInput();
 });
 
-downloadBtn.addEventListener("click",()=>{
-    let img = document.querySelector('.qr-body img');
+downloadBtn.addEventListener("click", (e) => {
+  e.preventDefault(); // Prevent the default behavior of the anchor tag
 
-    if(img!=null){
-        let imgAtr = img.getAttribute('src');
-        downloadBtn.setAttribute("href",imgAtr);
-        downloadBtn.setAttribute("download", "QR_Code.png");
-    }
-    else{
-        downloadBtn.setAttribute("href",`${document.querySelector('canvas').toDataURL()}`);
-        alert("QR Code not generated yet.");
-    }
+  let img = document.querySelector('.qr-body img');
 
-})
+  if (img != null) {
+    let imgSrc = img.getAttribute('src');
+
+    // Create an anchor element for downloading
+    let anchor = document.createElement("a");
+    anchor.href = imgSrc;
+    anchor.download = "QR_Code.png";
+
+    // Trigger a click event on the anchor to initiate the download
+    anchor.click();
+  } else {
+    alert("QR Code not generated yet.");
+  }
+});
 
 sizes.addEventListener("change", (e) => {
   size = e.target.value;
-  isEmptyInput()
+  isEmptyInput();
 });
 
 function isEmptyInput() {
-//   if (qrText.value.length > 0) {
-//     generateQRCode();
-//   } else {
-//     alert("Enter the text or URL to generate QR Code");
-//   }
-  (qrText.value.length > 0)?generateQRCode():alert("Enter the text or URL to generate QR Code");
+  if (qrText.value.length > 0) {
+    generateQRCode();
+  } else {
+    alert("Enter the text or URL to generate a QR Code");
+  }
 }
 
 let size = sizes.value;
